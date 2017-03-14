@@ -1,0 +1,146 @@
+\begin{frame}{Oblivious third parties protocols}
+
+\end{frame}
+
+\begin{frame}{Secure blind decryption}
+
+\end{frame}
+
+%\begin{frame}{Rerandomizable encryption}
+% 
+%  Example: ElGamal Encryption scheme
+%  
+%  \begin{figure}
+%    \tiny
+%    \begin{centering}
+%      \begin{tikzpicture}
+%        \node (E) at (0,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
+%        \node (D) at (6,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}};
+%        
+%        \node (ke) at (0,1.5){Encryption key $\PK = g^a$};
+%        \path (ke) edge [->] (E.north);
+%        \node (kd) at (6,1.5){Decryption key $\SK = a$};
+%        \path (kd) edge [->] (D.north);
+%        
+%        \node (m) at (-2.5,0.5){Message $m$};
+%        \path (m) edge [->] ([yshift = 0.5cm]E.west);
+%        \node (r) at (-2.5,-0.5){Randomness $r$};
+%        \path (r) edge [->] ([yshift = -0.5cm]E.west);
+% 
+%        \pause
+%        \node (M) at (3,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Merlin.jpg}};
+%        \path (E) edge[->] node[above]{$c$} node[below]{$=\{g^r, m\cdot g^{ar}\}$}(M);
+%        \path (M) edge [->] node[above]{$c'$} node[below]{$=\{g^{r'}, m \cdot g^{ar'}\}$}(D);
+%        \node (m3) at (6,-1.5){Decrypted message $m$};
+%        \path (D) edge [->] (m3);
+%        
+%        
+%      \end{tikzpicture}
+%    \end{centering}
+%  \end{figure}
+% 
+%  \pause
+%  
+%  \visible<3->{{\color{blue} \emph{Correctness}: } $Dec(\SK, Enc(\PK, m, r)) = m$}
+%  
+% 
+%\end{frame}
+% 
+% 
+% 
+% 
+% 
+%\begin{frame}{Indistinguishable Chosen-Ciphertext Attack (IND-CCA) and Replayable Chosen-Ciphertext Attack (RCCA) security}
+%  \alt<2->{RCCA}{IND-CCA}
+%  %  \begin{figure}
+%  %    \tiny
+%  %    \begin{centering}
+%  % 
+%  %      \begin{tikzpicture}
+%  % 
+%  %        \node (A) at (3,0)[draw, thick, minimum width = 1.5 cm, minimum height = 3cm]{\includegraphics[width=0.1\textwidth]{images/Eve.png}};
+%  %        \node (D) at (6,0)[draw, thick, minimum width = 1.5 cm, minimum height = 3cm]{\includegraphics[width = 0.05\textwidth]{images/Bob.png}};
+%  %        \node (E) at (0,0)[draw, thick, minimum width = 1 cm, minimum height = 1cm]{\includegraphics[width = 0.05\textwidth]{images/Alice.png}};
+%  %        
+%  %        
+%  %        \node (mb) at (-2,0.25){$b$};
+%  %        \path (mb) edge [->] ([yshift = 0.25cm]E.west);
+%  %        \node (r) at (-2,-0.25){$r$};
+%  %        \path (r) edge [->] ([yshift = -0.25cm]E.west);
+%  % 
+%  %        \path (E) edge[->] node[above]{$c^* = Enc(m_b; r)$}(A);
+%  % 
+%  %        \path ([yshift = 1.25cm]A.east) edge[->] node[above]{$\{c_i\}$}([yshift = 1.25cm]D.west);
+%  %        \path ([yshift = 0.75cm]A.east) edge[<-] node[above]{$\{m_i\}$}([yshift = 0.75cm]D.west);
+%  %        
+%  %        \path ([yshift = -0.75cm]A.east) edge[->] node[above]{\alt<2>{Cond\footnote{$Dec(k_d, \{c_j\}) \not \in \{m_0,m_1\}$}}{$\{c_j\}\neq c^*$}}([yshift = -0.75cm]D.west);
+%  %        \path ([yshift = -1.25cm]A.east) edge[<-] node[above]{$\{m_j\}$}([yshift = -1.25cm]D.west);
+%  %        
+%  %        
+%  %        \node (b') at (1,-1){$b'$};
+%  %        \path ([yshift= -1cm]A.west) edge[->] (b');
+%  % 
+%  %        
+%  %        \node (ke) at (3,2.5){$k_e$};
+%  %        \path (ke) edge[->](A);
+%  %        \node (kd) at (6,2.5){$k_d$};
+%  %        \path (kd) edge[->](D);
+%  %        
+%  %        \node (m0) at (1.5,1.25){$m_0$};
+%  %        \path ([yshift = 1.25cm]A.west) edge[->] (m0);
+%  %        \node (m1) at (1.5,0.75){$m_1$};
+%  %        \path ([yshift = 0.75cm]A.west) edge[->] (m1);
+%  % 
+%  % 
+%  %        \node (def)[align=left] at (-3,2){$b\in\{0,1\}$, $r$ random \\ $|r| = |m_0| = |m_1|$ \\ $i \in Query1$ \\ $j \in Query2$};
+%  %      \end{tikzpicture}
+%  % 
+%  %    \end{centering}
+%  %  \end{figure}
+% 
+%  \begin{figure}
+%    \begin{tikzpicture}
+%      \node(A)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (0,0) {Adversary};
+%      \node(C)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (4,0) {Challenger};
+%      \node(D)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (-4,0) {Decryption Oracle};
+%      
+%      \path([yshift = 1.4cm]A.east) edge[<-] node[above]{$\PK$} ([yshift = 1.4cm]C.west);
+%      \path([yshift = 1cm]D.east) edge[<-] node[above]{$C_i$} ([yshift = 1cm]A.west);
+%      \path([yshift = 0.6cm]D.east) edge[->] node[above]{$m_i$} ([yshift = 0.6cm]A.west);
+%      \path([yshift = 0.2cm]A.east) edge[->] node[above]{$m_0, m_1$} ([yshift = 0.2cm]C.west);
+%      
+%      \path([yshift = -0.2cm]A.east) edge[<-] node[above]{$C_b$}([yshift = -0.2cm]C.west);
+%      \path([yshift = -0.6cm]D.east) edge[<-] node[above]{\alt<2>{Cond\footnote{$Dec(k_d, \{C_j\}) \not \in \{m_0,m_1\}$}}{$\{C_j\}\neq C_b$}} ([yshift = -0.6cm]A.west);
+%      \path([yshift = -1cm]D.east) edge[->] node[above]{$m_i$} ([yshift = -1cm]A.west);
+%      
+%      \path([yshift = -1.4cm]A.east) edge[->] node[above]{$b'$}([yshift = -1.4cm]C.west);
+%    \end{tikzpicture}
+%    
+%  \end{figure}
+% 
+%  {\color{blue} Advantage:} $Adv(\Adv) = |\PR[b = b'] - \frac{1}{2}|$.
+%\end{frame}
+% 
+%\begin{frame}{Pairing and DDH (SXDH) assumtpion}
+%  \begin{block}{Pairing}
+%    For three groups $(\G, \hat{\G}, \G_T)$ of prime order $p$ and $e: \G \times \hat{\G} \to \G_T$.
+%    %    \begin{enumerate}
+%    %    \item Bilinear: $e (A^{\lambda}\cdot B,  C) = e(A,C)^{\lambda} \cdot e(B, C)$ and $e(A, B^{\lambda}\cdot C) = e(A, B)^{\lambda} \cdot e(A, C)$.
+%    %    \item Non-degenerate: Non-trivial $A,B$ verify $e(A, B) \neq 1$.
+%    %    \end{enumerate}
+%    \begin{align*}
+%      e(A^{\lambda}, B) &= e(A, B^{\lambda}) & e(g,h) = 1 &\mbox{ iff } g=1 \vee h=1 
+%    \end{align*}
+%  \end{block}
+% 
+%  \begin{block}{DDH (SXDH) assumption}
+%    $g \in \G$ and $a,b,c \sample \mathbb{Z}_p$.
+% 
+%    \begin{itemize}
+%    \item DDH: $(g,g^a, g^b, g^{ab}) \approx_c (g, g^a, g^b, g^c)$.
+% 
+%    \item SXDH: DDH in $\G$ and $\hat{\G}$.
+%    \end{itemize}
+%  \end{block}
+% 
+%\end{frame}
