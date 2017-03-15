@@ -1,6 +1,6 @@
 default:
 	pdflatex presentation
-#	bibtex presentation
+	bibtex presentation
 	pdflatex presentation
 	pdflatex presentation
 	evince presentation.pdf &

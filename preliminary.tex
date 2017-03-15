@@ -1,8 +1,8 @@
 
 \begin{frame}{Building blocks}
-  \begin{block}{Three building blocks for our RCCA scheme:}
+  \begin{block}{Two building blocks for our Structure-Preserving CCA and RCCA scheme:}
     \begin{enumerate}
-    \item (All-But-One) Non-Interactive Zero Knowledge Proof System.
+    \item Groth-Sahai Proof System 
     \item Structure-Preserving Commitment.
     \item Linearly Homomorphic Structure-Preserving Signature.
     \end{enumerate}
@@ -10,71 +10,36 @@
 \end{frame}
 
 
-
-\begin{frame}{All-But-One Non-Interactive Zero Kowledge Proof System}
-
-  NP language $\mathcal{L}$, instance $x$, witness $w$ such that $x \in_w \mathcal{L}$.
-
-  \textsf{CRS}: Common Reference String.
-
-
-%  \begin{columns}
-%    \begin{column}{0.5\textwidth}
-%      \tiny
-%      \begin{figure}
-%        \begin{centering}
-%          \begin{tikzpicture}
-%            \node (A) at (2,2)[minimum width = 1.5 cm, minimum height  = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/government.png}};
-%            \node (P) at (0,0)[minimum width = 1.5 cm, minimum height  = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
-%            \node (V) at (4,0)[minimum width = 1.5 cm, minimum height  = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}};
-%            \pause
-%            \path(A) edge[->] node[above, sloped]{\textsf{CRS}} (P);
-%            \path(A) edge[->] node[above, sloped]{\textsf{CRS}} (V);
-%            \pause
-%            \path ([yshift = 0.5cm] P.east) edge[->] node[above]{Proof $\pi$}([yshift = 0.5cm] V.west);
-%            \pause
-%            \path ([yshift = -0.5cm] P.east) edge[<-] node[above]{ Convinced or Not Convinced}([yshift = -0.5cm] V.west);
-
-  
-  %         \end{tikzpicture}
-  %       \end{centering}
-  %     \end{figure}
-  %   \end{column}
-  %   \begin{column}{0.5\textwidth}
-  %     \tiny
-  %     \begin{enumerate}
-  %     \item (Soundness) No adversary can prove wrong statement
-  %     \item (Zero-knowledge) Know nothing but the fact that the prover has a witness.
-  %     \end{enumerate}
-  %   \end{column}
-  % \end{columns}
-
-  %  \begin{description}
-  
-  %  \end{description}
-
-  \begin{columns}
-    \begin{column}{0.5\textwidth}
-      \begin{itemize}
-      \item $\Setup(\lambda, tag^*) \to CRS$: Generates the common reference string.
-      \item $\Prove(CRS, x, w, tag) \to \pi$: Generates a proof of $x \in \mathcal{L}$ \wrt $tag$.
-      \item $\Verif(CRS, x, \pi, tag) \to \{True, False\}$: Outputs convinced or not.
-      \end{itemize}
-    \end{column}
-    \pause
-    \begin{column}{0.5\textwidth}
-      \begin{enumerate}
-      \item {\color{blue}(All-But-One soundness)} For $x \not \in \mathcal{L}$, no one can generate a acceptable proof such that $tag \neq tag^*$.
-      \item {\color{blue}(Zero-knowledge)} No additional information except $x \in \mathcal{L}$.
-      \end{enumerate}
-    \end{column}
-    
-  \end{columns}
+\begin{frame}{Groth-Sahai Proof System}
+  \begin{block}{Proof Instance: Pairing Product Equation (PPE)}
+    \begin{align*}
+      \prod^{n}_{j=1} e(\mathcal{A}_j, \mathcal{Y}_j) \prod^{m}_{i=1}e(\mathcal{X}_i, \mathcal{B}_i)\prod^{m}_{i=1} \prod^{n}_{j=1}e(\mathcal{X}_i, \mathcal{Y}_j)^{\gamma_{i,j}} &= t_T
+    \end{align*}
+    Where for $i \in \{1, \dots, m\}$ and $j \in \{1, \dots, n\}$
+    \begin{enumerate}
+    \item $\mathcal{X}_i$ variables in $\G$, $\mathcal{Y}_j$ variables in $\hat{\G}$.
+    \item $\mathcal{A}_j$ constants in $\G$, $\mathcal{B}_i$ constants in $\hat{\G}$, $t_T$ constant in $\G_T$.
+    \end{enumerate}
+    $\mathcal{X}_i, \mathcal{Y}_j$ are variables in $\G$ and $\hat{\G}$, respectively, and $\mathcal{A}_j \in \G, \mathcal{B}_i \in \hat{\G}$ and $t_T \in \G_T$ are constan
+  \end{block}
   
 \end{frame}
 
+\begin{frame}{Groth-Sahai Proof System}
+  \begin{block}{Framework}
+    \begin{itemize}
+    \item $\Setup(\lambda) \to CRS$
+    \item $\Prove(CRS, (x, w)) \to \pi$
+    \item $\Verif(CRS, (x,w), \pi) \to \{\True, \False\}$
+    \end{itemize}
+  \end{block}
+\end{frame}
 
-\begin{frame}{(Structure-Preserving) Commitment}
+
+
+
+
+\begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
 
   \begin{block}{Framework}
       \begin{itemize}
@@ -83,20 +48,20 @@
       \item $\Verif(\ck, m, \com, \open) \to \{True, False\}$: Outputs convinced or not.
       \end{itemize}
   \end{block}
-
-  \pause
-  
+\end{frame}
+\begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
   \begin{block}{Properties}
     \begin{itemize}
       %    \item (Binding) No (PPT)adversary can produce $(m, m', \open, \open', \com)$ \st $\Verif(\ck, m, \com, \open) = \True$ and $\Verif(\ck, m', \com, \open') = \True$ and $m \neq m'$
       %    \item (Hiding)
-    \item {\color{blue}Correctness} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
-    \item {\color{blue}Chosen-Message Target Collision Resistant} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $m$ \st
+    \item {\color{blue}(Correctness)} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
+    \item {\color{blue}(Enhanced Chosen-Message Target Collision Resistant (ECM-TCR))} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $(m, \open)$ \st
       \begin{align*}
-        \Verif(\ck, m, \com^*, \open^*) &= \True \wedge m\neq m^*
+        \Verif(\ck, m, \com^*, \open) &= \True \wedge (m, \open) \neq (m^*, \open^*)
       \end{align*}
     \end{itemize}
   \end{block}
+
 
 \end{frame}
 
