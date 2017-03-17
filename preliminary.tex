@@ -26,15 +26,22 @@
 \end{frame}
 
 \begin{frame}{Groth-Sahai Proof System}
-  \begin{block}{Framework}
-    \begin{itemize}
-    \item $\Setup(\lambda) \to CRS$
-    \item $\Prove(CRS, (x, w)) \to \pi$
-    \item $\Verif(CRS, (x,w), \pi) \to \{\True, \False\}$
-    \end{itemize}
-  \end{block}
+%  \begin{block}{Framework}
+%    \begin{itemize}
+%    \item $\Setup(\lambda) \to CRS$
+%    \item $\Prove(CRS, (x, w)) \to \pi$
+%    \item $\Verif(CRS, (x,w), \pi) \to \{\True, \False\}$
+%    \end{itemize}
+%  \end{block}
 
-
+  A non-interactive zero-knowledge proof system $(\Setup, \Prove, \Verif)$:
+  \pause
+  \begin{itemize}
+  \item Prove pairing product equations.
+  \item Operate in two mode: perfect sound and perfect hide.
+  \end{itemize}
+  
+  \pause
   \begin{block}{Example}
     \begin{itemize}
     \item $\Setup(\lambda)$:  $(\G, \hat{\G}, \G_T)$ of prime order $p > 2^\lambda$ with generators $(g,\hat{g}) \sample \G \times \hat{\G}$, $\vec{u}_1, \vec{u}_2 \sample \G^2$.
@@ -63,7 +70,7 @@
     \begin{itemize}
       %    \item (Binding) No (PPT)adversary can produce $(m, m', \open, \open', \com)$ \st $\Verif(\ck, m, \com, \open) = \True$ and $\Verif(\ck, m', \com, \open') = \True$ and $m \neq m'$
       %    \item (Hiding)
-    \item {\color{blue}(Correctness)} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
+    \item {\color{blue}(Correctness)} %$\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
     \item {\color{blue}(Enhanced Chosen-Message Target Collision Resistant (ECM-TCR))} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $(m, \open)$ \st
       \begin{align*}
         \Verif(\ck, m, \com^*, \open) &= \True \wedge (m, \open) \neq (m^*, \open^*)

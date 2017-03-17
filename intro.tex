@@ -1,16 +1,19 @@
 \begin{frame}
   \begin{block}{Structure-Preserving Encryption scheme (informal)}
-    The encryption scheme in which all the ciphertexts, public keys are group elements over which a bilinear map is efficiently computable and all the operations in the algorithms are group operations and pairings (\eg no hash functions).
+    \begin{itemize}
+    \item Over a group with efficietly computable bilinear map.
+    \item Ciphertexts and public keys are group elements.
+    \item Only operations during the encryption are group operations (\eg no hash functions).
+    \end{itemize}
   \end{block}
 
   \pause
   
-  \begin{block}{Interests}
+  \begin{block}{Motivations}
     \begin{enumerate}
     \item Smooth interaction with Groth-Sahai non-interactive zero-knowledge proof system.
     \item Building blocks for more advanced primitive (\eg Oblivious third parties protocols, Secure blind decryption). 
     \end{enumerate}
-
   \end{block}
 \end{frame}
 
