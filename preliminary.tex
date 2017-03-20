@@ -1,6 +1,6 @@
 
 \begin{frame}{Building blocks}
-  \begin{block}{Two building blocks for our Structure-Preserving CCA and RCCA scheme:}
+  \begin{block}{Three building blocks for our Structure-Preserving CCA and RCCA scheme:}
     \begin{enumerate}
     \item Groth-Sahai Proof System 
     \item Structure-Preserving Commitment.
@@ -38,10 +38,13 @@
   \pause
   \begin{itemize}
   \item Prove pairing product equations.
-  \item Operate in two modes: soundness setting and witness indistinguishable setting depending on the common reference string (CRS). Which is consists of four vectors of group elements $(\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
+    \pause
+  \item {\color{blue}Operate in two modes}: soundness setting and witness indistinguishable setting depending on the common reference string (CRS). Which is consists of four vectors of group elements $(\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
+    \pause
   	\begin{itemize}
-  	\item  (Soundness setting) Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ such that $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. We can use the $\zeta, \hat{\zeta}$ to simulate a proof for false statement.
-  	\item (Witness indistinguishable setting) $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent. No false proof.
+  	\item  {\color{blue}(Soundness setting)} Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ such that $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. We can use the $\zeta, \hat{\zeta}$ to simulate a proof for false statement and extract the witness from a valid proof.
+          \pause
+  	\item {\color{blue}(Witness indistinguishable setting)} $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent. Cannot prove false statement and the proofs using different valid witnesses are indistinguishable.
   	\end{itemize}
   \end{itemize}
   
@@ -61,7 +64,7 @@
 
 \begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
 
-	Structure-Preserving Commitment $(\Setup, \Com, \Verif)$ which has the following properties.
+	Structure-Preserving Commitment $(\Setup, \Com, \Verif)$ which has the following properties.\pause
 %  \begin{block}{Framework}
 %      \begin{itemize}
 %      \item $\Setup(\lambda) \to \ck$: Generates commitment key $\ck$.
@@ -75,7 +78,8 @@
     \begin{itemize}
       %    \item (Binding) No (PPT)adversary can produce $(m, m', \open, \open', \com)$ \st $\Verif(\ck, m, \com, \open) = \True$ and $\Verif(\ck, m', \com, \open') = \True$ and $m \neq m'$
       %    \item (Hiding)
-    \item {\color{blue}(Correctness)} %$\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
+    \item {\color{blue}(Correctness)} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
+      \pause
     \item {\color{blue}(Enhanced Chosen-Message Target Collision Resistant (ECM-TCR))} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $(m, \open)$ \st
       \begin{align*}
         \Verif(\ck, m, \com^*, \open) &= \True \wedge (m, \open) \neq (m^*, \open^*)

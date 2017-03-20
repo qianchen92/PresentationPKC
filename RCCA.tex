@@ -1,4 +1,22 @@
 \begin{frame}{Rerandomizable encryption}
+  \begin{block}{Setup and parameters}
+    \begin{enumerate}
+    \item $f,g \sample \G$ and $\hat{g}, \hat{h} \sample \hat{\G}$
+    \item Choose random exponent $\alpha \sample \mathbb{Z}_p$ and $h = g^\alpha$.
+    \item Choose Groth-Sahai proof witness-indistinguishable setting CRS $\PPP_{GS} = (\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
+    \item Define $\vec{v}_1 = (f, g, 1, 1, 1)$ and $\vec{v}_2 = (1, 1, 1, g, h)$.
+    \item $(\SSK, \SVK) \gets LHSPS.\Setup$.
+    \item Generate $\sigma_{\vec{v}_1}$ and $\sigma_{\vec{v}_2}$ (also is a proof of space $span(\vec{v}_1, \vec{v}_2)$).
+    \item $\SK = \alpha \in \mathbb{Z}_p$ and
+      \begin{align*}
+        \PK &= (f,g,h,\PPP_{GS}, \hat{g}, \hat{h}) \in \G^{11} \times \hat{\G}^{16}
+      \end{align*}
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}{Rerandomizable encryption}
 
   %  \begin{block}{Details of the Encryption algorithm}
   %    \begin{itemize}
@@ -15,26 +33,105 @@
   %    \end{itemize}
   % 
   %  \end{block}
-
-
-      \tiny
-      RCCA encryption 
-      \begin{itemize}
-      \item Generate $\vec{C} = (C_0, C_1, C_2) = (MX^{\theta}, g_1^{\theta},  g_2^{\theta})$.
-      \item $LHSPS.\KeyGen(\PPP) \to (\SSK, \SVK)$.
-      \item $\Com(\ck, \SVK) \to (\com, \open)$.
-      \item $\Prove(\PPP_{ABOProof}, x = (C_1, C_2), w = \theta, tag = \com) \to \pi$ of the fact $\exists \chi$ such that $(C_1, C_2) = (g_1^\chi, g_2^\chi)$.
-      \item {\color{red}$LHSPS.\Sig(\SSK,((C_0,C_1,C_2, g),\pi)) \to \sigma_m$.}
-      \item {\color{red}$LHSPS.\Sig(\SSK,((X,g_1,g_2, 1),\pi)) \to \sigma_1$.}
-        {\color{blue}
-        \item $NIZK.\Prove(\PPP, m = (C_1, C_2), w = (\com,\pi)) \to \pi_{com}$
-        \item $NIZK.\Prove(\PPP, m = (\SVK), w = (\com, \open)) to \pi_{\SVK}$
-        \item $NIZK.\Prove(\PPP, m = (C_0,C_1,C_2,g), w = (\SVK, \sigma_m)) \to \pi_{\sigma_m}$
-        \item $NIZK.\Prove(\PPP, m = (X,g_1,g_2,1), w = (\SVK, \sigma_1)) \to \pi_{\sigma_1}$
-        }
-        
-      \item Output the ciphertext $(\vec{C},\pi_{com},\pi_{\SVK}, \pi_{\sigma_m}, \pi_{\sigma_1}) \in \G^{39} \times \hat{\G}^{20}$.
-      \end{itemize}
- 
- 
+  \begin{block}{Details of encryption}
+  \begin{itemize}
+    \pause
+  \item Generate $\vec{C} = (c_0, c_1, c_2) = (f^{\theta},  g^{\theta}, M \cdot h^{\theta})$.
+    \pause
+  \item Set $b = 1$ and generate a Groth-Sahai proof for $b \in \{0,1\}$.
+    \pause
+  \item Define $\vec{\Theta} = (\Theta_0, \Theta_1, \Theta_2) = (c_0^b, c_1^b, c_2^b)$ and it's proof $\pi_{\vec{\Theta}}$.
+    \pause
+  \item Generate a LHSPS signature $\sigma_{\vec{v}}$ of the vector
+    
+    $\vec{v} = (c_0, c_1, 1, 1, 1) = (c_0^b, c_1^b, g^{1-b}, c_1^{1-b}, c_2^{1-b})$.
+    \pause
+  \item $\Prove(\PPP_{GS}, x = \SVK, w=(\sigma_{\vec{v}}, \vec{\Theta})) \to \pi_{enc}$ of the fact that $\sigma_{\vec{v}}$ is a valid signature of $\vec{v}$.
+    \pause
+  \item To enable the rerandomization we also need to set $(F, G, H) = (f^b, g^b, h^b)$ and the it's proof $\pi_{FGH}$.
+    \pause
+  \item Generate a signature $\sigma_{\vec{w}}$ of the vector $\vec{w} = (f, g, 1, 1, 1) = (f^b, g^b, 1, g^{1-b}, h^{1-b})$.
+    \pause
+  \item $\Prove(\PPP_{GS}, x = \SVK, w=(\sigma_{\vec{w}}, F, G, H)) \to \pi_{rand}$ of the fact that $\sigma_{\vec{w}}$ is a valid signature of $\vec{w}$.
+    \pause
+  \item Output the ciphertext $(c_1, c_2, \pi_{\vec{\Theta}}, \pi_{enc}, \pi_{FGH}, \pi_{rand})$.
+  \end{itemize}
+  \end{block}
 \end{frame}
+
+%\begin{frame}{Proof Intuition}
+%  Recall: RCCA
+% \begin{figure}
+%    \begin{tikzpicture}
+%      \node(A)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (0,0) {Adversary};
+%      \node(C)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (4,0) {Challenger};
+%      \node(D)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (-4,0) {Decryption Oracle};
+%      
+%      \path([yshift = 1.4cm]A.east) edge[<-] node[above]{$\PK$} ([yshift = 1.4cm]C.west);
+%      \path([yshift = 1cm]D.east) edge[<-] node[above]{$C_i$} ([yshift = 1cm]A.west);
+%      \path([yshift = 0.6cm]D.east) edge[->] node[above]{$m_i$} ([yshift = 0.6cm]A.west);
+%      \path([yshift = 0.2cm]A.east) edge[->] node[above]{$m_0, m_1$} ([yshift = 0.2cm]C.west);
+%      
+%      \path([yshift = -0.2cm]A.east) edge[<-] node[above]{$C_b$}([yshift = -0.2cm]C.west);
+%      \path([yshift = -0.6cm]D.east) edge[<-] node[above]{Cond\footnote{$Dec(k_d, \{C_j\}) \not \in \{m_0,m_1\}$}} ([yshift = -0.6cm]A.west);
+%      \path([yshift = -1cm]D.east) edge[->] node[above]{$m_i$} ([yshift = -1cm]A.west);
+%      
+%      \path([yshift = -1.4cm]A.east) edge[->] node[above]{$b'$}([yshift = -1.4cm]C.west);
+%    \end{tikzpicture}
+%    
+%  \end{figure}
+%  {\color{blue} Advantage:} $Adv(\Adv) = |\PR[b = b'] - \frac{1}{2}|$.
+%\end{frame}
+
+
+%\begin{frame}
+%  \begin{columns}
+%    \begin{column}{0.5\textwidth}
+%    \tiny
+%      \begin{figure}
+%        \begin{tikzpicture}
+%          \node(A)[draw, thick, text width = 1cm, minimum height = 4cm] at (0,0) {Adversary};
+%          \node(C)[draw, thick, text width = 1cm, minimum height = 4cm] at (2,0) {Challenger};
+%          \node(D)[draw, thick, text width = 1cm, minimum height = 4cm] at (-2,0) {Decryption Oracle};
+%          
+%          \path([yshift = 1.4cm]A.east) edge[<-] node[above]{$\PK$} ([yshift = 1.4cm]C.west);
+%          \path([yshift = 1cm]D.east) edge[<-] node[above]{$C_i$} ([yshift = 1cm]A.west);
+%          \path([yshift = 0.6cm]D.east) edge[->] node[above]{$m_i$} ([yshift = 0.6cm]A.west);
+%          \path([yshift = 0.2cm]A.east) edge[->] node[above]{$m_0, m_1$} ([yshift = 0.2cm]C.west);
+%          
+%          \path([yshift = -0.2cm]A.east) edge[<-] node[above]{$C_b$}([yshift = -0.2cm]C.west);
+%          \path([yshift = -0.6cm]D.east) edge[<-] node[above]{Cond\footnotemark} ([yshift = -0.6cm]A.west);
+%          \path([yshift = -1cm]D.east) edge[->] node[above]{$m_i$} ([yshift = -1cm]A.west);
+%          
+%          \path([yshift = -1.4cm]A.east) edge[->] node[above]{$b'$}([yshift = -1.4cm]C.west);
+%        \end{tikzpicture}
+%      \end{figure}      
+%      {\color{blue} Advantage:} $Adv(\Adv) = |\PR[b = b'] - \frac{1}{2}|$.
+%    \end{column}
+% 
+%    \begin{column}{0.5\textwidth}
+  %      \tiny
+%  \begin{block}{Setup}
+%  \begin{itemize}
+%  \item \alt<5->{{\color{red}$h = f^xg^y$}}{$h = f^{\alpha}$.}
+%  \item $CRS = (\vec{u}_1, \vec{u}_1, \hat{\vec{u}}_1, \hat{\vec{u}}_2)$ \alt<4->{\color{red}linealy dependent (soundness) $\vec{u}_1 = \vec{u}_2^\zeta$ and $\vec{u}_1 = \hat{\vec{u}}_2^{\hat{\zeta}}$.}{linearly independent (witness-indistinguishable).}
+%  \end{itemize}
+%  \end{block}
+%      \begin{itemize}
+%      \item Generate $\vec{C} = (c_0, c_1, c_2) = (f^{\theta},  g^{\theta}, M \cdot h^{\theta})$.
+%      \item Set \alt<2->{{\color{red} $b = 0$}}{$b = 1$} and generate a Groth-Sahai proof for $b \in \{0,1\}$.
+%      \item Define $\vec{\Theta} = (\Theta_0, \Theta_1, \Theta_2) = (c_0^b, c_1^b, c_2^b)$ and it's proof $\pi_{\vec{\Theta}}$.
+%      \item \alt<3->{Generate a LHSPS signature $\sigma_{\vec{v}}$ {\color{red}using $\SSK$} of the vector
+%        $\vec{v} = {\color{red}(1, 1, 1, c_1, c_2)} = (c_0^b, c_1^b, g^{1-b}, c_1^{1-b}, c_2^{1-b})$.}{Generate a LHSPS signature $\sigma_{\vec{v}}$ of the vector
+%        $\vec{v} = (c_0, c_1, 1, 1, 1) = (c_0^b, c_1^b, g^{1-b}, c_1^{1-b}, c_2^{1-b})$.}
+%      \item $\Prove(\PPP_{GS}, x = \SVK, w=(\sigma_{\vec{v}}, \vec{\Theta})) \to \pi_{enc}$ of the fact that $\sigma_{\vec{v}}$ is a valid signature of $\vec{v}$.
+%      \item To enable the rerandomization we also need to set $(F, G, H) = (f^b, g^b, h^b)$ and the it's proof $\pi_{FGH}$.
+%      \item Generate a signature $\sigma_{\vec{w}}$ of the vector $\vec{w} = (f, g, 1, 1, 1) = \alt<3->{\color{red}(f^{1-b}, g^{1-b}, 1, g^b, h^b)}{(f^b, g^b, 1, g^{1-b}, h^{1-b})}$.
+%      \item $\Prove(\PPP_{GS}, x = \SVK, w=(\sigma_{\vec{w}}, F, G, H)) \to \pi_{rand}$ of the fact that $\sigma_{\vec{w}}$ is a valid signature of $\vec{w}$.
+%      \item Output the ciphertext $(c_1, c_2, \pi_{\vec{\Theta}}, \pi_{enc}, \pi_{FGH}, \pi_{rand})$.
+%      \end{itemize}
+%    \end{column}
+% 
+%  \end{columns}
+%  \footnotetext{$Dec(k_d, \{C_j\}) \not \in \{m_0,m_1\}$}
+%\end{frame}
