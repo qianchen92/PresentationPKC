@@ -20,7 +20,7 @@
     \item $\mathcal{X}_i$ variables in $\G$, $\mathcal{Y}_j$ variables in $\hat{\G}$.
     \item $\mathcal{A}_j$ constants in $\G$, $\mathcal{B}_i$ constants in $\hat{\G}$, $t_T$ constant in $\G_T$.
     \end{enumerate}
-    $\mathcal{X}_i, \mathcal{Y}_j$ are variables in $\G$ and $\hat{\G}$, respectively, and $\mathcal{A}_j \in \G, \mathcal{B}_i \in \hat{\G}$ and $t_T \in \G_T$ are constan
+    $\mathcal{X}_i, \mathcal{Y}_j$ are variables in $\G$ and $\hat{\G}$, respectively, and $\mathcal{A}_j \in \G, \mathcal{B}_i \in \hat{\G}$ and $t_T \in \G_T$ are constants.
   \end{block}
   
 \end{frame}
@@ -38,17 +38,21 @@
   \pause
   \begin{itemize}
   \item Prove pairing product equations.
-  \item Operate in two mode: perfect sound and perfect hide.
+  \item Operate in two modes: soundness setting and witness indistinguishable setting depending on the common reference string (CRS). Which is consists of four vectors of group elements $(\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
+  	\begin{itemize}
+  	\item  (Soundness setting) Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ such that $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. We can use the $\zeta, \hat{\zeta}$ to simulate a proof for false statement.
+  	\item (Witness indistinguishable setting) $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent. No false proof.
+  	\end{itemize}
   \end{itemize}
   
-  \pause
-  \begin{block}{Example}
-    \begin{itemize}
-    \item $\Setup(\lambda)$:  $(\G, \hat{\G}, \G_T)$ of prime order $p > 2^\lambda$ with generators $(g,\hat{g}) \sample \G \times \hat{\G}$, $\vec{u}_1, \vec{u}_2 \sample \G^2$.
-    \item $\Prove(CRS, (x, w))$: 
-    \item $\Verif(CRS, (x,w), \pi) \to \{\True, \False\}$
-    \end{itemize}
-  \end{block}
+%  \pause
+%  \begin{block}{Example}
+%    \begin{itemize}
+%    \item $\Setup(\lambda)$:  $(\G, \hat{\G}, \G_T)$ of prime order $p > 2^\lambda$ with generators $(g,\hat{g}) \sample \G \times \hat{\G}$, $\vec{u}_1, \vec{u}_2 \sample \G^2$.
+%    \item $\Prove(CRS, (x, w))$: 
+%    \item $\Verif(CRS, (x,w), \pi) \to \{\True, \False\}$
+%    \end{itemize}
+%  \end{block}
 \end{frame}
 
 
@@ -57,15 +61,16 @@
 
 \begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
 
-  \begin{block}{Framework}
-      \begin{itemize}
-      \item $\Setup(\lambda) \to \ck$: Generates commitment key $\ck$.
-      \item $\Com(\ck, m; \open) \to (\com,\open)$: Generates a commitment $\com$ \wrt the randomness $\open$.
-      \item $\Verif(\ck, m, \com, \open) \to \{True, False\}$: Outputs convinced or not.
-      \end{itemize}
-  \end{block}
-\end{frame}
-\begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
+	Structure-Preserving Commitment $(\Setup, \Com, \Verif)$ which has the following properties.
+%  \begin{block}{Framework}
+%      \begin{itemize}
+%      \item $\Setup(\lambda) \to \ck$: Generates commitment key $\ck$.
+%      \item $\Com(\ck, m; \open) \to (\com,\open)$: Generates a commitment $\com$ \wrt the randomness $\open$.
+%      \item $\Verif(\ck, m, \com, \open) \to \{True, False\}$: Outputs convinced or not.
+%      \end{itemize}
+%  \end{block}
+%\end{frame}
+%\begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
   \begin{block}{Properties}
     \begin{itemize}
       %    \item (Binding) No (PPT)adversary can produce $(m, m', \open, \open', \com)$ \st $\Verif(\ck, m, \com, \open) = \True$ and $\Verif(\ck, m', \com, \open') = \True$ and $m \neq m'$
