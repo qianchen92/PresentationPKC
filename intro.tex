@@ -1,24 +1,25 @@
 \begin{frame}
-  \begin{block}{Structure-Preserving Encryption scheme (informal)}
+  \begin{block}{Structure-Preserving Encryption (informal)}
     \pause
     \begin{itemize}
-    \item Over a group with efficiently computable bilinear map.
+    \item Over groups $(\G, \hat{\G})$ with efficiently computable bilinear map $e: \G \times \hat{\G} \to \G_T$.
       \pause
-    \item Ciphertexts and public keys are group elements.
+    \item Ciphertexts and public keys are elements of the source group $\G$ or $\hat{\G}$.
       \pause
-    \item Only operations during the encryption are group operation and pairing (\eg no hash functions).
+    \item Only operations during the encryption are group operation and pairing (\eg no hash function).
     \end{itemize}
   \end{block}
 
   \pause
   
-  \begin{block}{Motivations}
-    \begin{enumerate}
-    \item Smooth interaction with Groth-Sahai non-interactive zero-knowledge proof system.
-      \pause
-    \item Building blocks for more advanced primitives (\eg Oblivious third parties protocols~\cite{DBLP:conf/dim/CamenischGH08}, Secure blind decryption~\cite{DBLP:conf/pkc/Green11}).
-      \pause
-    \end{enumerate}
+  \begin{block}{Motivation of Structure-Preserving Cryptography}
+    Smooth interaction with Groth-Sahai non-interactive witness-indistinguishable (NIWI) proof system (witness extraction always possible).
+  \end{block}
+
+  \pause
+  
+  \begin{block}{Motivation of Structure-Preserving Encryption}
+    Building blocks for more advanced primitives (\eg Oblivious 3rd parties protocols~\cite{DBLP:conf/dim/CamenischGH08}, Secure blind decryption~\cite{DBLP:conf/pkc/Green11}).
   \end{block}
 \end{frame}
 
@@ -138,7 +139,7 @@
   {\color{blue} Advantage:} $Adv(\Adv) = |\PR[b = b'] - \frac{1}{2}|$.
 \end{frame}
  
-\begin{frame}{Pairing and DDH (SXDH) assumption}
+\begin{frame}{Type 3 pairings and DDH (SXDH) assumption}
   \begin{block}{Pairing}
     For three groups $(\G, \hat{\G}, \G_T)$ of prime order $p$ and $e: \G \times \hat{\G} \to \G_T$.
     %    \begin{enumerate}
@@ -148,16 +149,27 @@
     \begin{align*}
       e(A^{\lambda}, B) &= e(A, B^{\lambda}) & e(g,h) = 1 &\mbox{ iff } g=1 \vee h=1 
     \end{align*}
+    \pause
+    \begin{itemize}
+    \item No comutable isomorphism between $\G$ and $\hat{G}$.
+      \pause
+    \item Most efficient pairing configuration.
+    \end{itemize}
   \end{block}
   \pause
-  \begin{block}{DDH (SXDH) assumption}
-    $g \in \G$ and $a,b,c \sample \mathbb{Z}_p$.
+  \begin{block}{DDH (SXDH) assumption}.
+    $g \in \G$ and $a,b,c \sample \mathbb{Z}_p$
  
     \begin{itemize}
-    \item DDH: $(g,g^a, g^b, g^{ab}) \approx_c (g, g^a, g^b, g^c)$.
- 
+    \item DDH:
+      $$\{g,g^a, g^b, g^{ab}\} \approx_c \{g, g^a, g^b, g^c\}.$$
     \item SXDH: DDH in $\G$ and $\hat{\G}$.
     \end{itemize}
   \end{block}
  
+\end{frame}
+
+
+\begin{frame}{State of the art}
+
 \end{frame}

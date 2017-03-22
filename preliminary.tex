@@ -1,10 +1,9 @@
 
 \begin{frame}{Building blocks}
-  \begin{block}{Three building blocks for our Structure-Preserving CCA and RCCA scheme:}
+  \begin{block}{building blocks for our Structure-Preserving CCA and RCCA schemes:}
     \begin{enumerate}
-    \item Groth-Sahai Proof System 
+    \item Groth-Sahai Proof System~\cite{DBLP:conf/eurocrypt/GrothS08}.
     \item Structure-Preserving Commitment.
-    \item Linearly Homomorphic Structure-Preserving Signature.
     \end{enumerate}
   \end{block}
 \end{frame}
@@ -13,14 +12,13 @@
 \begin{frame}{Groth-Sahai Proof System}
   \begin{block}{Proof Instance: Pairing Product Equation (PPE)}
     \begin{align*}
-      \prod^{n}_{j=1} e(\mathcal{A}_j, \mathcal{Y}_j) \prod^{m}_{i=1}e(\mathcal{X}_i, \mathcal{B}_i)\prod^{m}_{i=1} \prod^{n}_{j=1}e(\mathcal{X}_i, \mathcal{Y}_j)^{\gamma_{i,j}} &= t_T
+      \prod^{n}_{j=1} e(\mathcal{A}_j, {\color{red}\mathcal{Y}_j}) \prod^{m}_{i=1}e({\color{red}\mathcal{X}_i}, \mathcal{B}_i)\prod^{m}_{i=1} \prod^{n}_{j=1}e({\color{red}\mathcal{X}_i}, {\color{red}\mathcal{Y}_j})^{\gamma_{i,j}} &= t_T
     \end{align*}
     Where for $i \in \{1, \dots, m\}$ and $j \in \{1, \dots, n\}$
     \begin{enumerate}
-    \item $\mathcal{X}_i$ variables in $\G$, $\mathcal{Y}_j$ variables in $\hat{\G}$.
-    \item $\mathcal{A}_j$ constants in $\G$, $\mathcal{B}_i$ constants in $\hat{\G}$, $t_T$ constant in $\G_T$.
+    \item ${\color{red}\mathcal{X}_i}$ variables in $\G$, ${\color{red}\mathcal{Y}_j}$ variables in $\hat{\G}$.
+    \item $\mathcal{A}_j$ constants in $\G$, $\mathcal{B}_i$ constants in $\hat{\G}$, $t_T$ constant in $\G_T$. and $\gamma_{i,j}$ constant in $\mathbb{Z}_n$
     \end{enumerate}
-    $\mathcal{X}_i, \mathcal{Y}_j$ are variables in $\G$ and $\hat{\G}$, respectively, and $\mathcal{A}_j \in \G, \mathcal{B}_i \in \hat{\G}$ and $t_T \in \G_T$ are constants.
   \end{block}
   
 \end{frame}
@@ -34,7 +32,7 @@
 %    \end{itemize}
 %  \end{block}
 
-  A non-interactive zero-knowledge proof system $(\Setup, \Prove, \Verif)$:
+  A NIWI proof system $(\Setup, \Prove, \Verif)$:
   \pause
   \begin{itemize}
   \item Prove pairing product equations.
@@ -44,7 +42,7 @@
   	\begin{itemize}
   	\item  {\color{blue}(Soundness setting)} Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ such that $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. We can use the $\zeta, \hat{\zeta}$ to simulate a proof for false statement and extract the witness from a valid proof.
           \pause
-  	\item {\color{blue}(Witness indistinguishable setting)} $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent. Cannot prove false statement and the proofs using different valid witnesses are indistinguishable.
+  	\item {\color{blue}(WI setting)} $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent. Cannot prove false statement and the proofs using different valid witnesses are indistinguishable.
   	\end{itemize}
   \end{itemize}
   
@@ -64,7 +62,7 @@
 
 \begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
 
-	Structure-Preserving Commitment $(\Setup, \Com, \Verif)$ which has the following properties.\pause
+  Strictly Structure-Preserving Commitment $(\Setup, \Com, \Verif)$ satisfying \pause
 %  \begin{block}{Framework}
 %      \begin{itemize}
 %      \item $\Setup(\lambda) \to \ck$: Generates commitment key $\ck$.
@@ -80,10 +78,11 @@
       %    \item (Hiding)
     \item {\color{blue}(Correctness)} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
       \pause
-    \item {\color{blue}(Enhanced Chosen-Message Target Collision Resistant (ECM-TCR))} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $(m, \open)$ \st
+    \item {\color{blue}(\textbf{Enhanced} Chosen-Message Target Collision Resistant (ECM-TCR))} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $(m, \open)$ \st
       \begin{align*}
         \Verif(\ck, m, \com^*, \open) &= \True \wedge (m, \open) \neq (m^*, \open^*)
       \end{align*}
+    \item {\color{blue}(Stricly Structure-Preserving)} The commitment is also in the source group $\G$ or $\hat{\G}$.
     \end{itemize}
   \end{block}
 

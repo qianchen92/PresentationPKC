@@ -1,14 +1,5 @@
 \begin{frame}{Structure-Preserving Publicly Verifiable Encryption}
-  \begin{block}{Framework}
-    \begin{itemize}
-    \item $\Setup(\lambda) \to \PPP$
-    \item $\KeyGen(\PPP) \to (\PK, \SK)$
-    \item $\Enc(\PPP, \PK, m) \to c$
-    \item $\Dec(\PPP, \SK, c) \to m \mbox{ or } \bot$
-    \item $\Verif(\PPP, \PK, c) \to \{\True, \False\}$
-    \end{itemize}
-  \end{block}
-  \pause
+  
   \begin{block}{Some parameters}
     
     \begin{itemize}
@@ -39,30 +30,6 @@
 
   \end{block}
 \end{frame}
-
-\begin{frame}{Proof intuitions}
-  Recall: IND-CCA
-  \begin{figure}
-    \begin{tikzpicture}
-      \node(A)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (0,0) {Adversary};
-      \node(C)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (4,0) {Challenger};
-      \node(D)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (-4,0) {Decryption Oracle};
-      
-      \path([yshift = 1.4cm]A.east) edge[<-] node[above]{$\PK$} ([yshift = 1.4cm]C.west);
-      \path([yshift = 1cm]D.east) edge[<-] node[above]{$C_i$} ([yshift = 1cm]A.west);
-      \path([yshift = 0.6cm]D.east) edge[->] node[above]{$m_i$} ([yshift = 0.6cm]A.west);
-      \path([yshift = 0.2cm]A.east) edge[->] node[above]{$m_0, m_1$} ([yshift = 0.2cm]C.west);
-      
-      \path([yshift = -0.2cm]A.east) edge[<-] node[above]{$C_b$}([yshift = -0.2cm]C.west);
-      \path([yshift = -0.6cm]D.east) edge[<-] node[above]{$\{C_j\}\neq C_b$} ([yshift = -0.6cm]A.west);
-      \path([yshift = -1cm]D.east) edge[->] node[above]{$m_i$} ([yshift = -1cm]A.west);
-      
-      \path([yshift = -1.4cm]A.east) edge[->] node[above]{$b'$}([yshift = -1.4cm]C.west);
-    \end{tikzpicture}
-    
-  \end{figure}
-\end{frame}
-
 
 
 \begin{frame}{Proof intuitions}
