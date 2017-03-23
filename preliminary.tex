@@ -37,12 +37,20 @@
   \begin{itemize}
   \item Prove pairing product equations.
     \pause
-  \item {\color{blue}Operate in two modes}: soundness setting and witness indistinguishable setting depending on the common reference string (CRS). Which is consists of four vectors of group elements $(\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
+  \item {\color{blue}Operate in two modes}: Depending on the common reference string $CRS = (\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
     \pause
   	\begin{itemize}
-  	\item  {\color{blue}(Soundness setting)} Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ such that $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. We can use the $\zeta, \hat{\zeta}$ to simulate a proof for false statement and extract the witness from a valid proof.
+  	\item  {\color{blue}(Soundness setting)} Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ \st $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. Using $\zeta, \hat{\zeta}$, we can 
+          \begin{enumerate}
+          \item Simulate a proof for false statement.
+          \item Extract the witness from a valid proof.
+          \end{enumerate}
           \pause
-  	\item {\color{blue}(WI setting)} $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent. Cannot prove false statement and the proofs using different valid witnesses are indistinguishable.
+  	\item {\color{blue}(Witness-Indistinguishable (WI) setting)} $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent.
+          \begin{enumerate}
+          \item Cannot prove false statement
+          \item Proofs using different valid witnesses are indistinguishable.
+          \end{enumerate}
   	\end{itemize}
   \end{itemize}
   
@@ -85,32 +93,6 @@
     \item {\color{blue}(Stricly Structure-Preserving)} The commitment is also in the source group $\G$ or $\hat{\G}$.
     \end{itemize}
   \end{block}
-
-
 \end{frame}
 
 
-\begin{frame}{Linearly Homomorphic Structure-Preserving Signature}
-  \begin{block}{Framework}
-  \begin{itemize}
-  \item $\boldmath{\Setup(\lambda) \to \PPP}$: Generates the public parameter $\PPP$.
-  \item $\boldmath{\KeyGen(\PPP) \to (\SK, \VK)}$: Generates the signing key $\SK$ and the verification key $\VK$.
-  \item $\boldmath{\Sig(\PPP, \SK, \vec{M} = \{\vec{m}_i\}_{i=1}^k) \to \vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k}$: Outputs a set of signatures $\vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$.
-  \item $\boldmath{\Verif(\PPP, \VK, \vec{m}, \vec{\sigma}) \to \{\True, \False\}}$
-  \end{itemize}
-  \end{block}
-\end{frame}
-
-\begin{frame}{Linearly Homomorphic Structure-Preserving Signature}
-  \begin{block}{Linearly homomorphic}
-    \begin{enumerate}
-    \item Signatures $\vec{\sigma}_i = (\sigma_{i,1}, \sigma_{i,2}, \sigma_{i,3}) \in \G^3$ of the message $\vec{m}_i = (m_{i,1}, \dots, m_{i,k}) \in \G^k$.
-    \item Random values $\lambda_1, \dots, \lambda_k \in \mathbb{Z}_p$.
-    \item New signature
-      \begin{align*}
-        \vec{\sigma}' &= (\prod_{i = 1}^k \sigma_{i,1}^{\lambda_i}, \prod_{i = 1}^k \sigma_{i,2}^{\lambda_i}, \prod_{i = 1}^k \sigma_{i,2}^{\lambda_i}) & \vec{m}' &= (\prod_{i = 1}^km_{i,1}^{\lambda_i}, \dots, \prod_{i = 1}^km_{i,k}^{\lambda_i})
-      \end{align*}
-    \end{enumerate}
-  \end{block}
-  
-\end{frame}

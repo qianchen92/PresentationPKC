@@ -1,10 +1,10 @@
 \begin{frame}{Linearly Homomorphic Structure-Preserving Signature}
   \begin{block}{Framework}
   \begin{itemize}
-  \item $\boldmath{\Setup(\lambda) \to \PPP}$: Generates the public parameter $\PPP$.
-  \item $\boldmath{\KeyGen(\PPP) \to (\SK, \VK)}$: Generates the signing key $\SK$ and the verification key $\VK$.
-  \item $\boldmath{\Sig(\PPP, \SK, \vec{M} = \{\vec{m}_i\}_{i=1}^k) \to \vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k}$: Outputs a set of signatures $\vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$.
-  \item $\boldmath{\Verif(\PPP, \VK, \vec{m}, \vec{\sigma}) \to \{\True, \False\}}$
+  \item $Setup(\lambda) \to \PPP$: Generates the public parameter $\PPP$.
+  \item $KeyGen(\PPP) \to (\SK, \VK)$: Generates the signing key $\SK$ and the verification key $\VK$.
+  \item $Sig(\PPP, \SK, \vec{M} = \{\vec{m}_i\}_{i=1}^k) \to \vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$: Outputs a set of signatures $\vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$.
+  \item $Verif(\PPP, \VK, \vec{m}, \vec{\sigma}) \to \{\True, \False\}$
   \end{itemize}
   \end{block}
 \end{frame}

@@ -24,6 +24,19 @@
 \end{frame}
 
 
+
+\begin{frame}{Secure blind decryption}
+  \begin{center}
+  \begin{figure}
+    \begin{tikzpicture}
+      \node(D)[scale=0.1] at (0,0) {\includegraphics{./images/Alice.png}};
+      \node(S)[scale=0.15] at (5,0) {\includegraphics{./images/Bob.png}};
+    \end{tikzpicture}
+  \end{figure}
+  \end{center}
+  
+\end{frame}
+
 %\begin{frame}{Rerandomizable encryption}
 % 
 %  Example: ElGamal Encryption scheme
@@ -151,7 +164,7 @@
     \end{align*}
     \pause
     \begin{itemize}
-    \item No comutable isomorphism between $\G$ and $\hat{G}$.
+    \item No comutable isomorphism between $\G$ and $\hat{\G}$.
       \pause
     \item Most efficient pairing configuration.
     \end{itemize}
@@ -171,5 +184,19 @@
 
 
 \begin{frame}{State of the art}
+  
+  \begin{block}{Structure-Preserving Signature}
+    \begin{itemize}
+    \item \cite{DBLP:journals/iacr/AbeHO10} Sign a message $\vec{M} = (m_1, m_2, \dots, m_n) \in \hat{\G}^n$ with a signature $2\G + 5\hat{\G}$ under SXDH with asymmetric pairing.
+    \end{itemize}
+  \end{block}
 
+  \pause
+
+  \begin{block}{Structure-Preserving Encryption}
+    \begin{itemize}
+    \item \cite{DBLP:conf/asiacrypt/CamenischHKLN11} Ciphertext of a message $m \in \G$ consists of $4\G + 1 \G_T$ under DLIN with symmetric pairing and not verifiable.
+    \end{itemize}
+  \end{block}
+    
 \end{frame}
