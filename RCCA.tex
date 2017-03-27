@@ -1,15 +1,10 @@
-\begin{frame}{Linearly Homomorphic Structure-Preserving Signature}
-  \begin{block}{Framework}
-  \begin{itemize}
-  \item $Setup(\lambda) \to \PPP$: Generates the public parameter $\PPP$.
-  \item $KeyGen(\PPP) \to (\SK, \VK)$: Generates the signing key $\SK$ and the verification key $\VK$.
-  \item $Sig(\PPP, \SK, \vec{M} = \{\vec{m}_i\}_{i=1}^k) \to \vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$: Outputs a set of signatures $\vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$.
-  \item $Verif(\PPP, \VK, \vec{m}, \vec{\sigma}) \to \{\True, \False\}$
-  \end{itemize}
+\begin{frame}{Building block: Linearly Homomorphic Structure-Preserving Signature}
+  \begin{block}{Intuition}
+    Given vectors of messages $\{\vec{m}_i\}_{i=1}^k$ and corresponded signatures $\{\vec{\sigma}_i\}_{i=1}^k$, anyone can generate a valid signature for any $\vec{m} \in span(\vec{m}_1, \dots, \vec{m}_k)$.
   \end{block}
-\end{frame}
 
-\begin{frame}{Linearly Homomorphic Structure-Preserving Signature}
+  \pause
+
   \begin{block}{Linearly homomorphic}
     \begin{enumerate}
     \item Signatures $\vec{\sigma}_i = (\sigma_{i,1}, \sigma_{i,2}, \sigma_{i,3}) \in \G^3$ of the message $\vec{m}_i = (m_{i,1}, \dots, m_{i,k}) \in \G^k$.
@@ -20,25 +15,54 @@
       \end{align*}
     \end{enumerate}
   \end{block}
+
+  
+%  \begin{block}{Framework}
+%  \begin{itemize}
+%  \item $Setup(\lambda) \to \PPP$: Generates the public parameter $\PPP$.
+%  \item $KeyGen(\PPP) \to (\SK, \VK)$: Generates the signing key $\SK$ and the verification key $\VK$.
+%  \item $Sig(\PPP, \SK, \vec{M} = \{\vec{m}_i\}_{i=1}^k) \to \vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$: Outputs a set of signatures $\vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$.
+%  \item $Verif(\PPP, \VK, \vec{m}, \vec{\sigma}) \to \{\True, \False\}$
+%  \end{itemize}
+%  \end{block}
 \end{frame}
 
 
-\begin{frame}{Rerandomizable encryption}
-  \begin{block}{Setup and parameters}
-    \begin{enumerate}
-    \item $f,g \sample \G$ and $\hat{g}, \hat{h} \sample \hat{\G}$
-    \item Choose random exponent $\alpha \sample \mathbb{Z}_p$ and $h = g^\alpha$.
-    \item Choose Groth-Sahai proof witness-indistinguishable setting CRS $\PPP_{GS} = (\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
-    \item Define $\vec{v}_1 = (f, g, 1, 1, 1)$ and $\vec{v}_2 = (1, 1, 1, g, h)$.
-    \item $(\SSK, \SVK) \gets LHSPS.\Setup$.
-    \item Generate $\sigma_{\vec{v}_1}$ and $\sigma_{\vec{v}_2}$ (also is a proof of space $span(\vec{v}_1, \vec{v}_2)$).
-    \item $\SK = \alpha \in \mathbb{Z}_p$ and
-      \begin{align*}
-        \PK &= (f,g,h,\PPP_{GS}, \hat{g}, \hat{h}) \in \G^{11} \times \hat{\G}^{16}
-      \end{align*}
-    \end{enumerate}
+\begin{frame}{Intuitions}
+  \begin{block}{Construction}
+  \begin{itemize}
+  \item Generate multiplicatively homomorphic ciphertexts $C_m$ and $C_1$ of $m$ and $1$.
+  \item Compute LHSPS signatures $\sigma_m$ and $\sigma_1$.
+  \item Prove the knowledge of LHSPS signatures.
+  \end{itemize}
   \end{block}
+  \pause
+  \begin{block}{Idea and improvement}
+    \begin{itemize}
+    \item Use same OR proof technique in~\cite{DBLP:conf/eurocrypt/ChaseKLM12}.
+    \item Our contribution: {\color{red}Improve the ciphertext's size with LHSPS}.
+    \end{itemize}
+  \end{block}
+
+  
 \end{frame}
+
+%\begin{frame}{Rerandomizable encryption}
+%  \begin{block}{Setup and parameters}
+%    \begin{enumerate}
+%    \item $f,g \sample \G$ and $\hat{g}, \hat{h} \sample \hat{\G}$
+%    \item Choose random exponent $\alpha \sample \mathbb{Z}_p$ and $h = g^\alpha$.
+%    \item Choose Groth-Sahai proof witness-indistinguishable setting CRS $\PPP_{GS} = (\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
+%    \item Define $\vec{v}_1 = (f, g, 1, 1, 1)$ and $\vec{v}_2 = (1, 1, 1, g, h)$.
+%    \item $(\SSK, \SVK) \gets LHSPS.\Setup$.
+%    \item Generate $\sigma_{\vec{v}_1}$ and $\sigma_{\vec{v}_2}$ (also is a proof of space $span(\vec{v}_1, \vec{v}_2)$).
+%    \item $\SK = \alpha \in \mathbb{Z}_p$ and
+%      \begin{align*}
+%        \PK &= (f,g,h,\PPP_{GS}, \hat{g}, \hat{h}, \sigma_{\vec{v}_1}, \sigma_{\vec{v}_2})
+%      \end{align*}
+%    \end{enumerate}
+%  \end{block}
+%\end{frame}
 
 
 \begin{frame}{Rerandomizable encryption}
@@ -59,28 +83,19 @@
   % 
   %  \end{block}
   \begin{block}{Details of encryption}
-  \begin{itemize}
-    \pause
-  \item Generate $\vec{C} = (c_0, c_1, c_2) = (f^{\theta},  g^{\theta}, M \cdot h^{\theta})$.
-    \pause
-  \item Set $b = 1$ and generate a Groth-Sahai proof for $b \in \{0,1\}$.
-    \pause
-  \item Define $\vec{\Theta} = (\Theta_0, \Theta_1, \Theta_2) = (c_0^b, c_1^b, c_2^b)$ and it's proof $\pi_{\vec{\Theta}}$.
-    \pause
-  \item Generate a LHSPS signature $\sigma_{\vec{v}}$ of the vector
-    
-    $\vec{v} = (c_0, c_1, 1, 1, 1) = (c_0^b, c_1^b, g^{1-b}, c_1^{1-b}, c_2^{1-b})$.
-    \pause
-  \item $\Prove(\PPP_{GS}, x = \SVK, w=(\sigma_{\vec{v}}, \vec{\Theta})) \to \pi_{enc}$ of the fact that $\sigma_{\vec{v}}$ is a valid signature of $\vec{v}$.
-    \pause
-  \item To enable the rerandomization we also need to set $(F, G, H) = (f^b, g^b, h^b)$ and the it's proof $\pi_{FGH}$.
-    \pause
-  \item Generate a signature $\sigma_{\vec{w}}$ of the vector $\vec{w} = (f, g, 1, 1, 1) = (f^b, g^b, 1, g^{1-b}, h^{1-b})$.
-    \pause
-  \item $\Prove(\PPP_{GS}, x = \SVK, w=(\sigma_{\vec{w}}, F, G, H)) \to \pi_{rand}$ of the fact that $\sigma_{\vec{w}}$ is a valid signature of $\vec{w}$.
-    \pause
-  \item Output the ciphertext $(c_1, c_2, \pi_{\vec{\Theta}}, \pi_{enc}, \pi_{FGH}, \pi_{rand})$.
-  \end{itemize}
+    \begin{itemize}
+    \item Generate $\vec{C} = (c_0, c_1, c_2) = (f^{\theta},  g^{\theta}, M \cdot h^{\theta})$.
+    \item Set $b = 1$ and generate a Groth-Sahai proof for $b \in \{0,1\}$ $e(g^b, \hat{g}^b) = e(g^b, \hat{g})$.
+    \item Define $\vec{\Theta} = (\Theta_0, \Theta_1, \Theta_2) = (c_0^b, c_1^b, c_2^b)$ and its proof $\pi_{\vec{\Theta}}$.
+    \item Generate a LHSPS signature $\sigma_{\vec{v}}$ of the vector
+      
+      $\vec{v} = (c_0, c_1, 1, 1, 1) = (c_0^b, c_1^b, g^{1-b}, c_1^{1-b}, c_2^{1-b})$ and its proof $\pi_{enc}$.
+      %    \pause
+      %  \item $\Prove(\PPP_{GS}, x = \SVK, w=(\sigma_{\vec{v}}, \vec{\Theta})) \to \pi_{enc}$ of the fact that $\sigma_{\vec{v}}$ is a valid signature of $\vec{v}$.
+    \item To enable the rerandomization we also need to set $(F, G, H) = (f^b, g^b, h^b)$ and its proof $\pi_{FGH}$.
+    \item Generate a signature $\sigma_{\vec{w}}$ of the vector $\vec{w} = (f, g, 1, 1, 1) = (f^b, g^b, 1, g^{1-b}, h^{1-b})$ and prove its validity $\pi_{rand}$.
+    \item Output the ciphertext $(c_1, c_2, \pi_{\vec{\Theta}}, \pi_{enc}, \pi_{FGH}, \pi_{rand})$.
+    \end{itemize}
   \end{block}
 \end{frame}
 
@@ -160,3 +175,5 @@
 %  \end{columns}
 %  \footnotetext{$Dec(k_d, \{C_j\}) \not \in \{m_0,m_1\}$}
 %\end{frame}
+
+

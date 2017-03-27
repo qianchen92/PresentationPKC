@@ -1,14 +1,4 @@
 
-\begin{frame}{Building blocks}
-  \begin{block}{building blocks for our Structure-Preserving CCA and RCCA schemes:}
-    \begin{enumerate}
-    \item Groth-Sahai Proof System~\cite{DBLP:conf/eurocrypt/GrothS08}.
-    \item Structure-Preserving Commitment.
-    \end{enumerate}
-  \end{block}
-\end{frame}
-
-
 \begin{frame}{Groth-Sahai Proof System}
   \begin{block}{Proof Instance: Pairing Product Equation (PPE)}
     \begin{align*}
@@ -17,7 +7,7 @@
     Where for $i \in \{1, \dots, m\}$ and $j \in \{1, \dots, n\}$
     \begin{enumerate}
     \item ${\color{red}\mathcal{X}_i}$ variables in $\G$, ${\color{red}\mathcal{Y}_j}$ variables in $\hat{\G}$.
-    \item $\mathcal{A}_j$ constants in $\G$, $\mathcal{B}_i$ constants in $\hat{\G}$, $t_T$ constant in $\G_T$. and $\gamma_{i,j}$ constant in $\mathbb{Z}_n$
+    \item $\mathcal{A}_j$ constants in $\G$, $\mathcal{B}_i$ constants in $\hat{\G}$, $t_T$ constant in $\G_T$ and $\gamma_{i,j}$ constants in $\mathbb{Z}_n$.
     \end{enumerate}
   \end{block}
   
@@ -40,15 +30,15 @@
   \item {\color{blue}Operate in two modes}: Depending on the common reference string $CRS = (\vec{u}_1, \vec{u}_2, \hat{\vec{u}}_1, \hat{\vec{u}}_2) \in \G^2 \times \G^2 \times \hat{\G}^2 \times \hat{\G}^2$.
     \pause
   	\begin{itemize}
-  	\item  {\color{blue}(Soundness setting)} Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ \st $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. Using $\zeta, \hat{\zeta}$, we can 
+  	\item  {\color{blue}Soundness setting} Exists $\zeta, \hat{\zeta} \in \mathbb{Z}_p$ \st $\vec{u}_2 = \vec{u}_1^\zeta$ and $\hat{\vec{u}}_2 = \hat{\vec{u}}_1^{\hat{\zeta}}$. Using $\zeta, \hat{\zeta}$, we can 
           \begin{enumerate}
           \item Simulate a proof for false statement.
           \item Extract the witness from a valid proof.
           \end{enumerate}
           \pause
-  	\item {\color{blue}(Witness-Indistinguishable (WI) setting)} $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent.
+  	\item {\color{blue}Witness-Indistinguishable (WI) setting} $(\vec{u}_1, \vec{u}_2)$ and $(\hat{\vec{u}}_1,  \hat{\vec{u}}_2)$ are pairwise independent.
           \begin{enumerate}
-          \item Cannot prove false statement
+          \item Cannot prove false statement.
           \item Proofs using different valid witnesses are indistinguishable.
           \end{enumerate}
   	\end{itemize}
@@ -70,7 +60,8 @@
 
 \begin{frame}{Strictly Structure-Preserving Commitment~\cite{DBLP:conf/eurocrypt/AbeKOT15}}
 
-  Strictly Structure-Preserving Commitment $(\Setup, \Com, \Verif)$ satisfying \pause
+  SSPE $(\Setup, \Com, \Verif)$:
+  \pause
 %  \begin{block}{Framework}
 %      \begin{itemize}
 %      \item $\Setup(\lambda) \to \ck$: Generates commitment key $\ck$.
@@ -84,13 +75,14 @@
     \begin{itemize}
       %    \item (Binding) No (PPT)adversary can produce $(m, m', \open, \open', \com)$ \st $\Verif(\ck, m, \com, \open) = \True$ and $\Verif(\ck, m', \com, \open') = \True$ and $m \neq m'$
       %    \item (Hiding)
-    \item {\color{blue}(Correctness)} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
+    \item {\color{blue}Correctness} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
       \pause
-    \item {\color{blue}(\textbf{Enhanced} Chosen-Message Target Collision Resistant (ECM-TCR))} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $(m, \open)$ \st
+    \item {\color{blue}\alt<5->{{\color{red}Enhanced}}{} Chosen-Message Target Collision Resistant (ECM-TCR)} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate \alt<5->{$(m, \open)$}{$m$} \st
       \begin{align*}
-        \Verif(\ck, m, \com^*, \open) &= \True \wedge (m, \open) \neq (m^*, \open^*)
+        \alt<5->{\Verif(\ck, m, \com^*, {\color{red}\open}) &= \True \wedge {\color{red}(m, \open) \neq {(m^*, \open^*)}}}{\Verif(\ck, m, \com^*, \open^*) &= \True \wedge  m \neq m^*}
       \end{align*}
-    \item {\color{blue}(Stricly Structure-Preserving)} The commitment is also in the source group $\G$ or $\hat{\G}$.
+      \pause
+    \item {\color{blue}Strictly Structure-Preserving} The commitment is also in the source group $\G$ or $\hat{\G}$.
     \end{itemize}
   \end{block}
 \end{frame}

@@ -6,20 +6,26 @@
       \pause
     \item Ciphertexts and public keys are elements of the source group $\G$ or $\hat{\G}$.
       \pause
-    \item Only operations during the encryption are group operation and pairing (\eg no hash function).
+    \item All cryptographic operations are group operation and pairing (\eg no hash function).
     \end{itemize}
   \end{block}
 
   \pause
   
-  \begin{block}{Motivation of Structure-Preserving Cryptography}
-    Smooth interaction with Groth-Sahai non-interactive witness-indistinguishable (NIWI) proof system (witness extraction always possible).
+  \begin{block}{Motivation}
+    Smooth combination with Groth-Sahai non-interactive witness-indistinguishable (NIWI) proof system.
+
+    (witness extraction always possible)
   \end{block}
 
   \pause
   
-  \begin{block}{Motivation of Structure-Preserving Encryption}
-    Building blocks for more advanced primitives (\eg Oblivious 3rd parties protocols~\cite{DBLP:conf/dim/CamenischGH08}, Secure blind decryption~\cite{DBLP:conf/pkc/Green11}).
+  \begin{block}{Example}
+
+    \begin{enumerate}
+    \item Secure blind decryption~\cite{DBLP:conf/pkc/Green11}
+    \item Oblivious 3rd parties protocols~\cite{DBLP:conf/dim/CamenischGH08}
+    \end{enumerate}
   \end{block}
 \end{frame}
 
@@ -29,10 +35,14 @@
   \begin{center}
   \begin{figure}
     \begin{tikzpicture}
-      \node(D)[scale=0.1] at (0,0) {\includegraphics{./images/Alice.png}};
-      \node(S)[scale=0.15] at (5,0) {\includegraphics{./images/Bob.png}};
-      \node(Key)[scale=0.1] at (0,3){\includegraphics{./images/Key.png}};
-      \node(Message)[scale=0.1] at (5,3){\includegraphics{./images/Letter.png}};
+      \node(Server) at (7,3) {\includegraphics{./images/server.png}};
+      \node(D)[scale=0.15] at (0,0) {\includegraphics{./images/Bob.png}};
+      \node(C)[scale=0.1] at (7,0) {\includegraphics{./images/Alice.png}};
+      \node(Key) at (0,3){$\SK_B$};
+      \path(Key) edge[->] (D);
+      \path(Server) edge[->] node[right]{$\Enc_{\PK_B}(m)$}(C);
+      \path([yshift = 0.4cm]D.east) edge[<-] node[above]{${\mathsf{LEnc_{\PK_A}}}(\Enc_{\PK_B}(m)), \pi_{Ciphertext}$} ([yshift = 0.4cm]C.west);
+      \path([yshift = -0.4cm]D.east) edge[->] node[above]{${\mathsf{LEnc_{\PK_A}}}(m), \pi_{\Dec}$} ([yshift = -0.4cm]C.west);
     \end{tikzpicture}
   \end{figure}
   \end{center}
@@ -83,59 +93,46 @@
 % 
 % 
 % 
-\begin{frame}{Indistinguishable Chosen-Ciphertext Attack (IND-CCA) and Replayable Chosen-Ciphertext Attack (RCCA) security}
-  \alt<2->{RCCA}{IND-CCA}
-  %  \begin{figure}
-  %    \tiny
-  %    \begin{centering}
-  % 
-  %      \begin{tikzpicture}
-  % 
-  %        \node (A) at (3,0)[draw, thick, minimum width = 1.5 cm, minimum height = 3cm]{\includegraphics[width=0.1\textwidth]{images/Eve.png}};
-  %        \node (D) at (6,0)[draw, thick, minimum width = 1.5 cm, minimum height = 3cm]{\includegraphics[width = 0.05\textwidth]{images/Bob.png}};
-  %        \node (E) at (0,0)[draw, thick, minimum width = 1 cm, minimum height = 1cm]{\includegraphics[width = 0.05\textwidth]{images/Alice.png}};
-  %        
-  %        
-  %        \node (mb) at (-2,0.25){$b$};
-  %        \path (mb) edge [->] ([yshift = 0.25cm]E.west);
-  %        \node (r) at (-2,-0.25){$r$};
-  %        \path (r) edge [->] ([yshift = -0.25cm]E.west);
-  % 
-  %        \path (E) edge[->] node[above]{$c^* = Enc(m_b; r)$}(A);
-  % 
-  %        \path ([yshift = 1.25cm]A.east) edge[->] node[above]{$\{c_i\}$}([yshift = 1.25cm]D.west);
-  %        \path ([yshift = 0.75cm]A.east) edge[<-] node[above]{$\{m_i\}$}([yshift = 0.75cm]D.west);
-  %        
-  %        \path ([yshift = -0.75cm]A.east) edge[->] node[above]{\alt<2>{Cond\footnote{$Dec(k_d, \{c_j\}) \not \in \{m_0,m_1\}$}}{$\{c_j\}\neq c^*$}}([yshift = -0.75cm]D.west);
-  %        \path ([yshift = -1.25cm]A.east) edge[<-] node[above]{$\{m_j\}$}([yshift = -1.25cm]D.west);
-  %        
-  %        
-  %        \node (b') at (1,-1){$b'$};
-  %        \path ([yshift= -1cm]A.west) edge[->] (b');
-  % 
-  %        
-  %        \node (ke) at (3,2.5){$k_e$};
-  %        \path (ke) edge[->](A);
-  %        \node (kd) at (6,2.5){$k_d$};
-  %        \path (kd) edge[->](D);
-  %        
-  %        \node (m0) at (1.5,1.25){$m_0$};
-  %        \path ([yshift = 1.25cm]A.west) edge[->] (m0);
-  %        \node (m1) at (1.5,0.75){$m_1$};
-  %        \path ([yshift = 0.75cm]A.west) edge[->] (m1);
-  % 
-  % 
-  %        \node (def)[align=left] at (-3,2){$b\in\{0,1\}$, $r$ random \\ $|r| = |m_0| = |m_1|$ \\ $i \in Query1$ \\ $j \in Query2$};
-  %      \end{tikzpicture}
-  % 
-  %    \end{centering}
-  %  \end{figure}
- 
+%\begin{frame}{Indistinguishable Chosen-Ciphertext Attack (IND-CCA) and Replayable Chosen-Ciphertext Attack (RCCA) security}
+%  \alt<2->{RCCA}{IND-CCA} 
+%  \begin{figure}
+%    \begin{tikzpicture}
+%      \node(A) at (0,0) {\includegraphics[scale=0.1]{./images/Eve.png}};
+%      \node(C) at (4,0) {\includegraphics[scale=0.15]{./images/Charlie.jpg}};
+%      \node(SK) at (-4,2) {\includegraphics[scale=0.03]{./images/Key.png}};
+%      \node(D) at (-4,0) {\includegraphics[scale = 0.05]{./images/gear.png}};
+% 
+%      \path(SK) edge[->] (D);
+%      
+%      \path([yshift = 1.4cm]A.east) edge[<-] node[above]{$\PK$} ([yshift = 1.4cm]C.west);
+%      \path([yshift = 1cm]D.east) edge[<-] node[above]{$C_i$} ([yshift = 1cm]A.west);
+%      \path([yshift = 0.6cm]D.east) edge[->] node[above]{$m_i$} ([yshift = 0.6cm]A.west);
+%      \path([yshift = 0.2cm]A.east) edge[->] node[above]{$m_0, m_1$} ([yshift = 0.2cm]C.west);
+%      
+%      \path([yshift = -0.2cm]A.east) edge[<-] node[above]{$C_b$}([yshift = -0.2cm]C.west);
+%      \path([yshift = -0.6cm]D.east) edge[<-] node[above]{\alt<2>{{\color{red}Cond\footnote{{\color{red}$Dec(k_d, \{C_j\}) \not \in \{m_0,m_1\}$}}}}{$\{C_j\}\neq C_b$}} ([yshift = -0.6cm]A.west);
+%      \path([yshift = -1cm]D.east) edge[->] node[above]{$m_i$} ([yshift = -1cm]A.west);
+%      
+%      \path([yshift = -1.4cm]A.east) edge[->] node[above]{$b'$}([yshift = -1.4cm]C.west);
+%    \end{tikzpicture}
+%    
+%  \end{figure}
+% 
+%  {\color{blue} Advantage:} $Adv(\Adv) = |\PR[b = b'] - \frac{1}{2}|$.
+% 
+%  \visible<2->{{\color{red} Optimal security notion for the rerandomizable encryption scheme}}
+%\end{frame}
+
+\begin{frame}{Indistinguishable Chosen-Ciphertext Attack (IND-CCA) security}
+  IND-CCA 
   \begin{figure}
     \begin{tikzpicture}
-      \node(A)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (0,0) {Adversary};
-      \node(C)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (4,0) {Challenger};
-      \node(D)[draw, thick, text width = 1.7cm, minimum height = 3cm] at (-4,0) {Decryption Oracle};
+      \node(A) at (0,0) {\includegraphics[scale=0.1]{./images/Eve.png}};
+      \node(C) at (4,0) {\includegraphics[scale=0.15]{./images/Charlie.jpg}};
+      \node(SK) at (-4,2) {\includegraphics[scale=0.03]{./images/Key.png}};
+      \node(D) at (-4,0) {\includegraphics[scale = 0.05]{./images/gear.png}};
+
+      \path(SK) edge[->] (D);
       
       \path([yshift = 1.4cm]A.east) edge[<-] node[above]{$\PK$} ([yshift = 1.4cm]C.west);
       \path([yshift = 1cm]D.east) edge[<-] node[above]{$C_i$} ([yshift = 1cm]A.west);
@@ -143,7 +140,7 @@
       \path([yshift = 0.2cm]A.east) edge[->] node[above]{$m_0, m_1$} ([yshift = 0.2cm]C.west);
       
       \path([yshift = -0.2cm]A.east) edge[<-] node[above]{$C_b$}([yshift = -0.2cm]C.west);
-      \path([yshift = -0.6cm]D.east) edge[<-] node[above]{\alt<2>{Cond\footnote{$Dec(k_d, \{C_j\}) \not \in \{m_0,m_1\}$}}{$\{C_j\}\neq C_b$}} ([yshift = -0.6cm]A.west);
+      \path([yshift = -0.6cm]D.east) edge[<-] node[above]{$\{C_j\}\neq C_b$} ([yshift = -0.6cm]A.west);
       \path([yshift = -1cm]D.east) edge[->] node[above]{$m_i$} ([yshift = -1cm]A.west);
       
       \path([yshift = -1.4cm]A.east) edge[->] node[above]{$b'$}([yshift = -1.4cm]C.west);
@@ -152,8 +149,40 @@
   \end{figure}
  
   {\color{blue} Advantage:} $Adv(\Adv) = |\PR[b = b'] - \frac{1}{2}|$.
+
 \end{frame}
+
+\begin{frame}{Replayable Chosen-Ciphertext Attack (RCCA) security}
+  RCCA 
+  \begin{figure}
+    \begin{tikzpicture}
+      \node(A) at (0,0) {\includegraphics[scale=0.1]{./images/Eve.png}};
+      \node(C) at (4,0) {\includegraphics[scale=0.15]{./images/Charlie.jpg}};
+      \node(SK) at (-4,2) {\includegraphics[scale=0.03]{./images/Key.png}};
+      \node(D) at (-4,0) {\includegraphics[scale = 0.05]{./images/gear.png}};
+
+      \path(SK) edge[->] (D);
+      
+      \path([yshift = 1.4cm]A.east) edge[<-] node[above]{$\PK$} ([yshift = 1.4cm]C.west);
+      \path([yshift = 1cm]D.east) edge[<-] node[above]{$C_i$} ([yshift = 1cm]A.west);
+      \path([yshift = 0.6cm]D.east) edge[->] node[above]{$m_i$} ([yshift = 0.6cm]A.west);
+      \path([yshift = 0.2cm]A.east) edge[->] node[above]{$m_0, m_1$} ([yshift = 0.2cm]C.west);
+      
+      \path([yshift = -0.2cm]A.east) edge[<-] node[above]{$C_b$}([yshift = -0.2cm]C.west);
+      \path([yshift = -0.6cm]D.east) edge[<-] node[above]{\color{red}Cond\footnote{{\color{red}$Dec(k_d, \{C_j\}) \not \in \{m_0,m_1\}$}}} ([yshift = -0.6cm]A.west);
+      \path([yshift = -1cm]D.east) edge[->] node[above]{$m_i$} ([yshift = -1cm]A.west);
+      
+      \path([yshift = -1.4cm]A.east) edge[->] node[above]{$b'$}([yshift = -1.4cm]C.west);
+    \end{tikzpicture}
+    
+  \end{figure}
  
+  {\color{blue} Advantage:} $Adv(\Adv) = |\PR[b = b'] - \frac{1}{2}|$.
+
+  {\color{red} Optimal security notion for the rerandomizable encryption scheme}
+\end{frame}
+
+
 \begin{frame}{Type 3 pairings and DDH (SXDH) assumption}
   \begin{block}{Pairing}
     For three groups $(\G, \hat{\G}, \G_T)$ of prime order $p$ and $e: \G \times \hat{\G} \to \G_T$.
@@ -166,13 +195,13 @@
     \end{align*}
     \pause
     \begin{itemize}
-    \item No comutable isomorphism between $\G$ and $\hat{\G}$.
+    \item No computable isomorphism between $\G$ and $\hat{\G}$
       \pause
-    \item Most efficient pairing configuration.
+    \item Most efficient pairing configuration
     \end{itemize}
   \end{block}
   \pause
-  \begin{block}{DDH (SXDH) assumption}.
+  \begin{block}{DDH (SXDH) assumption}
     $g \in \G$ and $a,b,c \sample \mathbb{Z}_p$
  
     \begin{itemize}
@@ -197,7 +226,7 @@
 
   \begin{block}{Structure-Preserving Encryption}
     \begin{itemize}
-    \item \cite{DBLP:conf/asiacrypt/CamenischHKLN11} Ciphertext of a message $m \in \G$ consists of $4\G + 1 \G_T$ under DLIN with symmetric pairing and not verifiable.
+    \item \cite{DBLP:conf/asiacrypt/CamenischHKLN11} Ciphertext of a message $m \in \G$ consists of $4\G + 1 \G_T$ under DLIN with symmetric pairing and not publicly verifiable.
     \end{itemize}
   \end{block}
     

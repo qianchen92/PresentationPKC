@@ -1,10 +1,32 @@
-\begin{frame}{Our contributions}
-  \setbeamercolor{normal text}{fg=gray,bg=}
-  \setbeamercolor{alerted text}{fg=black,bg=}
-  \usebeamercolor{normal text}
+%\begin{frame}{Our contributions}
+%  \setbeamercolor{normal text}{fg=gray,bg=}
+%  \setbeamercolor{alerted text}{fg=black,bg=}
+%  \usebeamercolor{normal text}
+% 
+%  \begin{enumerate}
+%  \item\alert<+>{ Construction of an efficient Structure-Preserving Publicly Verifiable Encryption $16\times\G + 11\times\hat{\G}$ against $321\times\G$ [Abe et.al.~2013].}
+%  \item\alert<+>{ Construction an efficient RCCA rerandomizable encryption scheme $29 \times\G + 20 \times\hat{\G}$ against $93\times\G$ under the DLIN assumption or $49\times\G +20 \times\hat{\G}$ under the SXDH assumption.~\cite{DBLP:conf/eurocrypt/ChaseKLM12}}.
+%  \end{enumerate}
+%\end{frame}
 
-  \begin{enumerate}
-  \item\alert<+>{ Construction of an efficient Structure-Preserving Publicly Verifiable Encryption $16\times\G + 11\times\hat{\G}$ against $321\times\G$ [Abe \etal~2013].}
-  \item\alert<+>{ Construction an efficient RCCA rerandomizable encryption scheme $29 \times\G + 20 \times\hat{\G}$ against $93\times\G$ under the DLIN assumption or $49\times\G +20 \times\hat{\G}$ under the SXDH assumption.~\cite{DBLP:conf/eurocrypt/ChaseKLM12} }.
-  \end{enumerate}
+
+\begin{frame}{Contributions}
+  \begin{center}
+    \begin{tabular}{|c|c|c|c|c|}
+      \hline
+      & Ciphertext Size\footnote{In the asymmetric setting, we have $|\hat{\G}| \approx 2 \cdot |\G|$.} & Assumption & Security\\
+      \hline
+      \cite{DBLP:conf/pkc/AbeDKNO13} & $321\times\G$ & DLIN & CCA\\
+      \hline
+      {\color{red}This work} & {\color{red}$16\times\G + 11\times\hat{\G}$} & SXDH & CCA\\
+      \hline
+      \cite{DBLP:conf/eurocrypt/ChaseKLM12} & $93 \times \G$ & DLIN & RCCA\\
+      \hline
+      \cite{DBLP:conf/eurocrypt/ChaseKLM12} & $49\times\G +20 \times\hat{\G}$ & SXDH & RCCA\\
+      \hline
+      {\color{red}This work\footnote{Instantiation of their generic construction with the more efficient tools to date.}} & {\color{red}$29 \times\G + 20 \times\hat{\G}$} & SXDH & RCCA\\
+      \hline
+    \end{tabular}
+  \end{center}
+
 \end{frame}
